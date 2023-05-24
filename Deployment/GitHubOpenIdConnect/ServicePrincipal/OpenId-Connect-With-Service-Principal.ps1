@@ -131,6 +131,7 @@ if ($null -eq $servicePrincipalId) {
     az role assignment create --role Owner --subscription $subscriptionId --assignee-object-id $servicePrincipalId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subscriptionId/resourceGroups/$resourceGroupName
 }
 else {
+    az role assignment create --role Owner --subscription $subscriptionId --assignee-object-id $servicePrincipalId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subscriptionId/resourceGroups/$resourceGroupName
     Write-Host "Existing Service Principal found."
 }
 
@@ -156,7 +157,7 @@ Write-Host "Creating Federated Identity Credentials for main branch:"
 az ad app federated-credential create --id $appRegId --parameters ./mainfic.jsonc
 Write-Host "Creating Federated Identity Credentials for pull requests:"
 az ad app federated-credential create --id $appRegId --parameters ./prfic.jsonc
-
+exit 0
 # Setting GitHub repository secrets
 Write-Host "Creating the following GitHub repository secrets..."
 Write-Host "AZURE_CLIENT_ID: $appRegId"

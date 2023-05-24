@@ -11,9 +11,6 @@ param adminPassword string
 @description('Location for all resources.')
 param location string
 
-@description('A unique string for the application or workload name')
-param uniqueApplicationId string
-
 @description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
 param dnsLabelPrefix string = toLower('${vmName}-${uniqueString(resourceGroup().id, vmName)}')
 
@@ -34,9 +31,6 @@ param publicIPAllocationMethod string = 'Static'
 ])
 param publicIpSku string = 'Standard'
 
-@description('Version of OS running on the virtual machine.')
-param OSVersion string = '2022-datacenter-azure-edition'
-
 @description('Size of the virtual machine.')
 param vmSize string = 'Standard_B1s'
 
@@ -46,7 +40,6 @@ param vmName string = 'opp-optic-vm'
 @description('Security Type of the Virtual Machine.')
 param securityType string = 'TrustedLaunch'
 
-var storageAccountName = 'bootdiags${uniqueApplicationId}'
 var nicName = 'opp-optic-vm-nic'
 var addressPrefix = '10.0.0.0/16'
 var subnetName = 'opp-optic-vm-subnet'
@@ -59,15 +52,6 @@ var securityProfileJson = {
     vTpmEnabled: true
   }
   securityType: securityType
-}
-resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
-  name: storageAccountName
-  tags: tags
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'Storage'
 }
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2022-05-01' = {
