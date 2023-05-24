@@ -16,6 +16,7 @@ module windowsServer 'windowServer.bicep' = {
     adminPassword: adminPassword
     adminUsername: 'sa'
     tags: tags
+    autoShutdownNotificationEmail: 'test@omegapoint.se'
   }
 }
 

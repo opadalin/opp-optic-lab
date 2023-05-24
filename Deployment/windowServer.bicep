@@ -3,6 +3,9 @@ param tags object
 @description('Username for the Virtual Machine.')
 param adminUsername string
 
+@description('Email')
+param autoShutdownNotificationEmail string
+
 @description('Password for the Virtual Machine.')
 @minLength(12)
 @secure()
@@ -210,6 +213,26 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
       }
     }
     securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
+  }
+}
+
+resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-09-15' = {
+  name: 'shutdown-computevm-${vmName}'
+  location: location
+  properties: {
+    status: 'Enabled'
+    taskType: 'ComputeVmShutdownTask'
+    dailyRecurrence: {
+      time: '19:00'
+    }
+    timeZoneId: 'W. Europe Standard Time'
+    targetResourceId: virtualMachine.id
+    notificationSettings: {
+      status: 'Enabled'
+      notificationLocale: 'en'
+      timeInMinutes: 30
+      emailRecipient: autoShutdownNotificationEmail
+    }
   }
 }
 
