@@ -1,6 +1,5 @@
 param applicationName string
 param uniqueApplicationId string
-param env string
 param location string
 param tags object
 
@@ -13,7 +12,7 @@ Key vault name restrictions:
 @minLength(3)
 @maxLength(24)
 #disable-next-line BCP335
-param keyVaultName string = 'kv-${applicationName}-${uniqueApplicationId}-${env}'
+param keyVaultName string = 'kv-${applicationName}-${uniqueApplicationId}'
 
 @description('Specifies whether the key vault is a standard vault or a premium vault.')
 @allowed([

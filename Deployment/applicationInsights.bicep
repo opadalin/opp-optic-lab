@@ -1,5 +1,4 @@
 param location string
-param env string
 param tags object
 param applicationName string
 param uniqueApplicationId string
@@ -11,8 +10,8 @@ Valid characters: string (required). Can't use: %&\?/ or control characters. Can
 @minLength(1)
 @maxLength(260)
 #disable-next-line BCP335
-param applicationInsightsName string = 'appi-${applicationName}-${uniqueApplicationId}-${env}'
-var workspaceName = 'log-${applicationName}-${uniqueApplicationId}-${env}'
+param applicationInsightsName string = 'appi-${applicationName}-${uniqueApplicationId}'
+var workspaceName = 'log-${applicationName}-${uniqueApplicationId}'
 
 @description('Log Analytics workspace')
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
