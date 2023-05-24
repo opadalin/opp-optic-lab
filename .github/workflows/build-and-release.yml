@@ -49,6 +49,6 @@ jobs:
           # Specify the path or URL to the Azure Resource Manager template.
           template: ${{ env.TEMPLATE_FILE_PATH }}
           # Supply deployment parameter values.
-          parameters: userId=${{ secrets.AZURE_SIGNED_IN_USER_ID }}
+          parameters: adminPassword=${{ secrets.AZURE_VM_PASSWORD }}
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
