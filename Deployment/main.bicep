@@ -6,7 +6,7 @@ param userId string
 param location string = resourceGroup().location
 
 @description('Specifies the application name')
-param applicationName string = 'dc'
+param applicationName string = 'oppoptic'
 
 @description('A unique string for the application or workload name')
 param uniqueApplicationId string = substring(uniqueString(resourceGroup().id), 0, 5)
