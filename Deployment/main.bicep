@@ -1,8 +1,4 @@
 @secure()
-@description('Principal id of the user-assigned managed identity used for OIDC in pipeline. Is set from release pipeline')
-param azurePrincipalId string
-
-@secure()
 @description('Principal id of the user who set up the above user-assigned managed identity. Is set from release pipeline')
 param userId string
 
