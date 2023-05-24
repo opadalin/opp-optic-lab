@@ -60,12 +60,6 @@ var securityProfileJson = {
   }
   securityType: securityType
 }
-var extensionName = 'GuestAttestation'
-var extensionPublisher = 'Microsoft.Azure.Security.WindowsAttestation'
-var extensionVersion = '1.0'
-var maaTenantName = 'GuestAttestation'
-var maaEndpoint = substring('emptyString', 0, 0)
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: storageAccountName
   tags: tags
@@ -164,39 +158,56 @@ resource nic 'Microsoft.Network/networkInterfaces@2022-05-01' = {
   ]
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2022-03-01' = {
+
+@description('Amount of data disks (1TB each) for SQL Data files')
+@minValue(1)
+@maxValue(8)
+param sqlDataDisksCount int = 1
+
+@description('Amount of data disks (1TB each) for SQL Log files')
+@minValue(1)
+@maxValue(8)
+param sqlLogDisksCount int = 1
+
+
+var dataDisks = {
+  createOption: 'Empty'
+  caching: 'ReadOnly'
+  writeAcceleratorEnabled: false
+  storageAccountType: 'Premium_LRS'
+  diskSizeGB: 1023
+}
+
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
   name: vmName
   location: location
-  tags: tags
   properties: {
     hardwareProfile: {
       vmSize: vmSize
     }
-    osProfile: {
-      computerName: vmName
-      adminUsername: adminUsername
-      adminPassword: adminPassword
-    }
     storageProfile: {
-      imageReference: {
-        publisher: 'MicrosoftWindowsServer'
-        offer: 'WindowsServer'
-        sku: OSVersion
-        version: 'latest'
-      }
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
-          storageAccountType: 'StandardSSD_LRS'
+          storageAccountType: 'Premium_LRS'
         }
       }
-      dataDisks: [
-        {
-          diskSizeGB: 1023
-          lun: 0
-          createOption: 'Empty'
+      imageReference: {
+        publisher: 'MicrosoftSQLServer'
+        offer: 'sql2022-ws2022'
+        sku: 'standard-gen2'
+        version: 'latest'
+      }
+      dataDisks: [for j in range(0, (sqlDataDisksCount + sqlLogDisksCount)): {
+        lun: j
+        createOption: dataDisks.createOption
+        caching: ((j >= sqlDataDisksCount) ? 'None' : dataDisks.caching)
+        writeAcceleratorEnabled: dataDisks.writeAcceleratorEnabled
+        diskSizeGB: dataDisks.diskSizeGB
+        managedDisk: {
+          storageAccountType: dataDisks.storageAccountType
         }
-      ]
+      }]
     }
     networkProfile: {
       networkInterfaces: [
@@ -205,36 +216,18 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-03-01' = {
         }
       ]
     }
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: true
-        storageUri: storageAccount.properties.primaryEndpoints.blob
+    osProfile: {
+      computerName: vmName
+      adminUsername: adminUsername
+      adminPassword: adminPassword
+      windowsConfiguration: {
+        enableAutomaticUpdates: true
+        provisionVMAgent: true
       }
     }
     securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
   }
 }
 
-resource vmExtension 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = if ((securityType == 'TrustedLaunch') && ((securityProfileJson.uefiSettings.secureBootEnabled == true) && (securityProfileJson.uefiSettings.vTpmEnabled == true))) {
-  parent: vm
-  name: extensionName
-  location: location
-  tags: tags
-  properties: {
-    publisher: extensionPublisher
-    type: extensionName
-    typeHandlerVersion: extensionVersion
-    autoUpgradeMinorVersion: true
-    enableAutomaticUpgrade: true
-    settings: {
-      AttestationConfig: {
-        MaaSettings: {
-          maaEndpoint: maaEndpoint
-          maaTenantName: maaTenantName
-        }
-      }
-    }
-  }
-}
 
 output hostname string = publicIp.properties.dnsSettings.fqdn
