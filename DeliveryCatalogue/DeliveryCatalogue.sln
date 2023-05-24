@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "Functions\Functions.csproj", "{AE4F6CBE-70A9-4185-9BE5-45D7F24F30A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{C232A289-038C-42D5-AB44-2822481E755D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{710E3382-ACD9-4B75-B731-2DFC98477461}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{F64606E0-D970-492E-BF2B-2A7E2CDC3F90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2D271E02-7A71-4CC6-8F6C-FE8E56D6A601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{AC3E21C0-1C87-4961-B5B4-D0ADD56BB6DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IaC", "IaC", "{AA51081C-9004-45F1-ACE2-9E5BFEE5DD57}"
+	ProjectSection(SolutionItems) = preProject
+		..\Deployment\Setup\List-My-Role-Assignments.ps1 = ..\Deployment\Setup\List-My-Role-Assignments.ps1
+		..\Deployment\Setup\Remove-Orphan-Role-Assignments.ps1 = ..\Deployment\Setup\Remove-Orphan-Role-Assignments.ps1
+		..\Deployment\Setup\Assign-Roles.ps1 = ..\Deployment\Setup\Assign-Roles.ps1
+		..\Deployment\roleAssignments.bicep = ..\Deployment\roleAssignments.bicep
+		..\Deployment\applicationInsights.bicep = ..\Deployment\applicationInsights.bicep
+		..\Deployment\funcStorageAccount.bicep = ..\Deployment\funcStorageAccount.bicep
+		..\Deployment\main.bicep = ..\Deployment\main.bicep
+		..\Deployment\GitHubOpenIdConnect\local.settings.jsonc = ..\Deployment\GitHubOpenIdConnect\local.settings.jsonc
+		..\Deployment\GitHubOpenIdConnect\OpenIdConnectWithUserAssignedManagedIdentity.drawio.png = ..\Deployment\GitHubOpenIdConnect\OpenIdConnectWithUserAssignedManagedIdentity.drawio.png
+		..\Deployment\GitHubOpenIdConnect\README.md = ..\Deployment\GitHubOpenIdConnect\README.md
+		..\Deployment\GitHubOpenIdConnect\OpenId-Connect-With-User-Assigned-MI.ps1 = ..\Deployment\GitHubOpenIdConnect\OpenId-Connect-With-User-Assigned-MI.ps1
+		..\Deployment\GitHubOpenIdConnect\local.settings.default.jsonc = ..\Deployment\GitHubOpenIdConnect\local.settings.default.jsonc
+		..\Deployment\keyVault.bicep = ..\Deployment\keyVault.bicep
+		..\Deployment\functionApp.bicep = ..\Deployment\functionApp.bicep
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE4F6CBE-70A9-4185-9BE5-45D7F24F30A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4F6CBE-70A9-4185-9BE5-45D7F24F30A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4F6CBE-70A9-4185-9BE5-45D7F24F30A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4F6CBE-70A9-4185-9BE5-45D7F24F30A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C232A289-038C-42D5-AB44-2822481E755D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C232A289-038C-42D5-AB44-2822481E755D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C232A289-038C-42D5-AB44-2822481E755D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C232A289-038C-42D5-AB44-2822481E755D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710E3382-ACD9-4B75-B731-2DFC98477461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710E3382-ACD9-4B75-B731-2DFC98477461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710E3382-ACD9-4B75-B731-2DFC98477461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710E3382-ACD9-4B75-B731-2DFC98477461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F64606E0-D970-492E-BF2B-2A7E2CDC3F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64606E0-D970-492E-BF2B-2A7E2CDC3F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64606E0-D970-492E-BF2B-2A7E2CDC3F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64606E0-D970-492E-BF2B-2A7E2CDC3F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3E21C0-1C87-4961-B5B4-D0ADD56BB6DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3E21C0-1C87-4961-B5B4-D0ADD56BB6DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3E21C0-1C87-4961-B5B4-D0ADD56BB6DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3E21C0-1C87-4961-B5B4-D0ADD56BB6DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C232A289-038C-42D5-AB44-2822481E755D} = {2D271E02-7A71-4CC6-8F6C-FE8E56D6A601}
+	EndGlobalSection
+EndGlobal
