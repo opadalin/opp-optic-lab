@@ -91,6 +91,19 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-05-0
           destinationAddressPrefix: '*'
         }
       }
+      {
+        name: 'allow-sql-1433'
+        properties: {
+          priority: 1001
+          access: 'Allow'
+          direction: 'Inbound'
+          destinationPortRange: '1433'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+        }
+      }
     ]
   }
 }
@@ -210,6 +223,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
       windowsConfiguration: {
         enableAutomaticUpdates: true
         provisionVMAgent: true
+        patchSettings: {
+          enableHotpatching: false
+          patchMode: 'AutomaticByOS'
+        }
       }
     }
     securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
@@ -232,6 +249,45 @@ resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-
       notificationLocale: 'en'
       timeInMinutes: 30
       emailRecipient: autoShutdownNotificationEmail
+    }
+  }
+}
+
+resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-07-01-preview' = {
+  name: vmName
+  location: location
+  properties: {
+    virtualMachineResourceId: virtualMachine.id
+    sqlManagement: 'Full'
+    sqlServerLicenseType: 'PAYG'
+    storageConfigurationSettings: {
+      diskConfigurationType: 'NEW'
+      storageWorkloadType: 'General'
+      sqlDataSettings: {
+        luns: range(0, sqlDataDisksCount)
+        defaultFilePath: 'F:\\SQLData'
+      }
+      sqlLogSettings: {
+        luns: range(sqlDataDisksCount, sqlLogDisksCount)
+        defaultFilePath: 'G:\\SQLLog'
+      }
+      sqlTempDbSettings: {
+        defaultFilePath: 'D:\\SQLTemp'
+      }
+    }
+    autoPatchingSettings: {
+      enable: true
+      dayOfWeek: 'Sunday'
+      maintenanceWindowStartingHour: 2
+      maintenanceWindowDuration: 60
+    }
+    serverConfigurationsManagementSettings: {
+      sqlConnectivityUpdateSettings: {
+        connectivityType: 'PUBLIC'
+        port: 1433
+        sqlAuthUpdateUserName: 'oppopticsa'
+        sqlAuthUpdatePassword: adminPassword
+      }
     }
   }
 }
