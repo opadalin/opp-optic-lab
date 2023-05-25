@@ -286,7 +286,7 @@ resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-
       sqlConnectivityUpdateSettings: {
         connectivityType: 'PUBLIC'
         port: 1433
-        sqlAuthUpdateUserName: 'oppopticadmin'
+        sqlAuthUpdateUserName: adminUsername
         sqlAuthUpdatePassword: adminPassword
       }
     }
