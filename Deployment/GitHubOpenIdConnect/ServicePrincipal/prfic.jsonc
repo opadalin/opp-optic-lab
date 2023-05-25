@@ -1,9 +1,0 @@
-{
-  "name": "prfic",
-  "issuer": "https://token.actions.githubusercontent.com",
-  "subject": "repo:opadalin/opp-optic-lab:pull_request",
-  "description": "Federated identity credentials for pull requests",
-  "audiences": [
-    "api://AzureADTokenExchange"
-  ]
-}

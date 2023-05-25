@@ -2,4 +2,4 @@
 
 | CI/CD |
 | - |
-| [![Build and Release](https://github.com/opadalin/opp-optic-lab/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/opadalin/opp-optic-lab/actions/workflows/build-and-release.yml) |
+| [![Release to Azure](https://github.com/opadalin/opp-optic-lab/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/opadalin/opp-optic-lab/actions/workflows/build-and-release.yml) |
