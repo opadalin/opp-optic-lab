@@ -75,19 +75,6 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-05-0
   properties: {
     securityRules: [
       {
-        name: 'default-allow-3389'
-        properties: {
-          priority: 1000
-          access: 'Allow'
-          direction: 'Inbound'
-          destinationPortRange: '3389'
-          protocol: 'Tcp'
-          sourcePortRange: '*'
-          sourceAddressPrefix: '*'
-          destinationAddressPrefix: '*'
-        }
-      }
-      {
         name: 'allow-sql-1433'
         properties: {
           priority: 1001
