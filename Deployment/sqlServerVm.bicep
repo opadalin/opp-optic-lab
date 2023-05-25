@@ -246,7 +246,7 @@ resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-
     status: 'Enabled'
     taskType: 'ComputeVmShutdownTask'
     dailyRecurrence: {
-      time: '13:30'
+      time: '14:00'
     }
     timeZoneId: 'W. Europe Standard Time'
     targetResourceId: virtualMachine.id
