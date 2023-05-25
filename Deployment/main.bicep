@@ -16,7 +16,7 @@ module windowsServer 'sqlServerVm.bicep' = {
     adminPassword: adminPassword
     adminUsername: 'oppopticadmin'
     tags: tags
-    autoShutdownNotificationEmail: 'test@omegapoint.se'
+    autoShutdownNotificationEmail: 'niklas.lennerdahl@omegapoint.se'
   }
 }
 

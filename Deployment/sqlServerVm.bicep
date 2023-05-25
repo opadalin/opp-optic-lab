@@ -58,7 +58,7 @@ param logPath string = 'G:\\SQLLog'
 param location string = resourceGroup().location
 
 var addressPrefix = '10.0.0.0/16'
-var subnetName = 'opp-optic-vm-subnet'
+var subnetName = '${virtualMachineName}-subnet'
 var subnetPrefix = '10.0.0.0/24'
 var virtualNetworkName = 'opp-optic-vnet'
 
@@ -246,7 +246,7 @@ resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-
     status: 'Enabled'
     taskType: 'ComputeVmShutdownTask'
     dailyRecurrence: {
-      time: '19:00'
+      time: '13:30'
     }
     timeZoneId: 'W. Europe Standard Time'
     targetResourceId: virtualMachine.id
