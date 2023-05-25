@@ -1,5 +1,8 @@
 param tags object
 
+@description('Location for all resources.')
+param location string
+
 @description('Email')
 @secure()
 param autoShutdownNotificationEmail string
@@ -58,9 +61,6 @@ param sqlLogDisksCount int = 1
 
 @description('Path for SQL Log files. Please choose drive letter from F to Z and different than the one used for SQL data. Drive letter from A to E are reserved for system')
 param logPath string = 'G:\\SQLLog'
-
-@description('Location for all resources.')
-param location string = resourceGroup().location
 
 var addressPrefix = '10.0.0.0/16'
 var subnetName = '${virtualMachineName}-subnet'
