@@ -6,6 +6,10 @@ param adminPassword string
 @secure()
 param publicIpAddress string
 
+@description('Email address for shutdown notification')
+@secure()
+param emailAddress string
+
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
@@ -14,18 +18,13 @@ param tags object = {
 }
 
 module windowsServer 'sqlServerVm.bicep' = {
-  name: 'windows-server-deploy'
+  name: 'sql-server-vm-deploy'
   params: {
     location: location
     adminPassword: adminPassword
     adminUsername: 'oppopticadmin'
     tags: tags
     publicIpAddress: publicIpAddress
-    autoShutdownNotificationEmail: 'niklas.lennerdahl@omegapoint.se'
+    autoShutdownNotificationEmail: emailAddress
   }
-}
-
-@description('Azure built-in roles')
-module roleDefinitions 'roleDefinitions.bicep' = {
-  name: 'role-definitions'
 }

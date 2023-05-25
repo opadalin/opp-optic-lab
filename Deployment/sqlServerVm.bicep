@@ -1,6 +1,7 @@
 param tags object
 
 @description('Email')
+@secure()
 param autoShutdownNotificationEmail string
 
 @description('Public IP address')
@@ -182,6 +183,7 @@ var securityProfileJson = {
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
   name: virtualMachineName
   location: location
+  tags: tags
   properties: {
     hardwareProfile: {
       vmSize: virtualMachineSize
@@ -233,18 +235,19 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
 resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   name: 'shutdown-computevm-${virtualMachineName}'
   location: location
+  tags: tags
   properties: {
     status: 'Enabled'
     taskType: 'ComputeVmShutdownTask'
     dailyRecurrence: {
-      time: '14:00'
+      time: '19:00'
     }
     timeZoneId: 'W. Europe Standard Time'
     targetResourceId: virtualMachine.id
     notificationSettings: {
       status: 'Enabled'
       notificationLocale: 'en'
-      timeInMinutes: 30
+      timeInMinutes: 15
       emailRecipient: autoShutdownNotificationEmail
     }
   }
@@ -253,6 +256,7 @@ resource shutdown_computevm_virtualMachine 'Microsoft.DevTestLab/schedules@2018-
 resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-07-01-preview' = {
   name: virtualMachineName
   location: location
+  tags: tags
   properties: {
     virtualMachineResourceId: virtualMachine.id
     sqlManagement: 'Full'

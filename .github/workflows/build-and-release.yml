@@ -49,6 +49,6 @@ jobs:
           # Specify the path or URL to the Azure Resource Manager template.
           template: ${{ env.TEMPLATE_FILE_PATH }}
           # Supply deployment parameter values.
-          parameters: adminPassword=${{ secrets.AZURE_VM_PASSWORD }} publicIpAddress=${{ secrets.PUBLIC_IP_ADDRESS }}
+          parameters: adminPassword=${{ secrets.AZURE_VM_PASSWORD }} publicIpAddress=${{ secrets.PUBLIC_IP_ADDRESS }} emailAddress=${{ secrets.EMAIL_ADDRESS }}
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
