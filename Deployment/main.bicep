@@ -9,7 +9,7 @@ param tags object = {
   'op-production': 'optic'
 }
 
-module windowsServer 'windowServer.bicep' = {
+module windowsServer 'sqlServerVm.bicep' = {
   name: 'windows-server-deploy'
   params: {
     location: location
