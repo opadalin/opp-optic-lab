@@ -64,7 +64,7 @@ param location string = resourceGroup().location
 var addressPrefix = '10.0.0.0/16'
 var subnetName = '${virtualMachineName}-subnet'
 var subnetPrefix = '10.0.0.0/24'
-var virtualNetworkName = 'opp-optic-vnet'
+var virtualNetworkName = '${virtualMachineName}-vnet'
 
 var networkInterfaceName = '${virtualMachineName}-nic'
 var networkSecurityGroupName = '${virtualMachineName}-nsg'
