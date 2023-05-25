@@ -2,7 +2,7 @@ name: Build and Release
 run-name: ${{ github.event.head_commit.message }}
 
 # concurrency keyword will prevent having multiple concurrent runs of your workflow
-concurrency: optic-vm
+concurrency: opp-optic-vm
 
 env:
   TEMPLATE_FILE_PATH: ./Deployment/main.bicep
@@ -16,6 +16,8 @@ on:
     branches:
       - main
       - 'feature/*'
+    paths-ignore:
+      - 'README.md'
   pull_request:
     branches:
       - main
