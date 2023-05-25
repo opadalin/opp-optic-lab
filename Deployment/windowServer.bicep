@@ -185,11 +185,12 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
     hardwareProfile: {
       vmSize: vmSize
     }
+    
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
-          storageAccountType: 'Premium_LRS'
+          storageAccountType: 'StandardSSD_LRS'
         }
       }
       imageReference: {
@@ -229,6 +230,11 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
         }
       }
     }
+    diagnosticsProfile:{
+      bootDiagnostics: {
+        enabled: true
+      }
+    }
     securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
   }
 }
@@ -260,9 +266,10 @@ resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-
     virtualMachineResourceId: virtualMachine.id
     sqlManagement: 'Full'
     sqlServerLicenseType: 'PAYG'
+    leastPrivilegeMode: 'Enabled'
     storageConfigurationSettings: {
       diskConfigurationType: 'NEW'
-      storageWorkloadType: 'General'
+      storageWorkloadType: 'OLTP'
       sqlDataSettings: {
         luns: range(0, sqlDataDisksCount)
         defaultFilePath: 'F:\\SQLData'
@@ -273,7 +280,13 @@ resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-
       }
       sqlTempDbSettings: {
         defaultFilePath: 'D:\\SQLTemp'
+        dataFileCount: 2
+        dataFileSize: 8
+        dataGrowth: 64
+        logFileSize: 8
+        logGrowth: 64
       }
+      sqlSystemDbOnDataDisk: false
     }
     autoPatchingSettings: {
       enable: true
@@ -287,6 +300,18 @@ resource sqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-
         port: 1433
         sqlAuthUpdateUserName: 'oppopticsa'
         sqlAuthUpdatePassword: adminPassword
+      }
+      additionalFeaturesServerConfigurations: {
+        isRServicesEnabled: false
+      }
+      sqlInstanceSettings: {
+        maxDop: 0
+        isOptimizeForAdHocWorkloadsEnabled: false
+        collation: 'SQL_Latin1_General_CP1_CI_AS'
+        minServerMemoryMB: 0
+        maxServerMemoryMB: 2147483647
+        isLpimEnabled: false
+        isIfiEnabled: false
       }
     }
   }

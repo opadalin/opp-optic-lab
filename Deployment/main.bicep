@@ -14,7 +14,7 @@ module windowsServer 'windowServer.bicep' = {
   params: {
     location: location
     adminPassword: adminPassword
-    adminUsername: 'sa'
+    adminUsername: 'oppopticadmin'
     tags: tags
     autoShutdownNotificationEmail: 'test@omegapoint.se'
   }
