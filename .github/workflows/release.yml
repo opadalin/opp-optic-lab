@@ -1,4 +1,4 @@
-name: Build and Release
+name: Release to Azure
 run-name: ${{ github.event.head_commit.message }}
 
 # concurrency keyword will prevent having multiple concurrent runs of your workflow
