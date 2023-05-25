@@ -2,6 +2,10 @@
 @secure()
 param adminPassword string
 
+@description('Public IP address')
+@secure()
+param publicIpAddress string
+
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
@@ -16,6 +20,7 @@ module windowsServer 'sqlServerVm.bicep' = {
     adminPassword: adminPassword
     adminUsername: 'oppopticadmin'
     tags: tags
+    publicIpAddress: publicIpAddress
     autoShutdownNotificationEmail: 'niklas.lennerdahl@omegapoint.se'
   }
 }

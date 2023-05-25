@@ -3,6 +3,10 @@ param tags object
 @description('Email')
 param autoShutdownNotificationEmail string
 
+@description('Public IP address')
+@secure()
+param publicIpAddress string
+
 @description('The name of the VM')
 param virtualMachineName string = 'opp-optic-vm'
 
@@ -92,7 +96,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-05-0
           destinationPortRange: '1433'
           protocol: 'Tcp'
           sourcePortRange: '*'
-          sourceAddressPrefix: '*'
+          sourceAddressPrefix: publicIpAddress
           destinationAddressPrefix: '*'
         }
       }
